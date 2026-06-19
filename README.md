@@ -1,6 +1,6 @@
 # RAG-Based Document Q&A System
 
-A Retrieval-Augmented Generation (RAG) system that answers questions about the AWS Customer Agreement using semantic search and LLM-powered question answering.
+A Retrieval-Augmented Generation (RAG) system that answers questions about any PDF document using semantic search and LLM-powered question answering.
 
 Built with **FastAPI**, **ChromaDB**, **Sentence Transformers**, **Groq**, **SQLite**, and **Streamlit**.
 
@@ -77,7 +77,7 @@ Analytics Dashboard
 
 ## Chunk Size: 1000 Characters
 
-The AWS Customer Agreement contains long legal clauses and dense paragraphs. A chunk size of 1000 characters preserves enough context for complete contractual clauses while maintaining efficient retrieval.
+Documents often contain long clauses and dense paragraphs. A chunk size of 1000 characters preserves enough context for complete sections while maintaining efficient retrieval.
 
 ## Chunk Overlap: 200 Characters
 
@@ -85,7 +85,7 @@ A 200-character overlap reduces information loss at chunk boundaries and improve
 
 ## Top-K Retrieval: 4
 
-Retrieving the top 4 chunks provides sufficient context for most legal questions while avoiding excessive noise in the prompt.
+Retrieving the top 4 chunks provides sufficient context for most questions while avoiding excessive noise in the prompt.
 
 ## Embedding Model: all-MiniLM-L6-v2
 
@@ -128,7 +128,7 @@ This ensures responses remain grounded in the source document.
 # Project Structure
 
 ```text
-vestaff-rag-assignment/
+rag-document-qa/
 │
 ├── app/
 │   ├── analytics.py
@@ -142,7 +142,7 @@ vestaff-rag-assignment/
 ├── chroma_db/
 │
 ├── data/
-│   └── AWS Customer Agreement.pdf
+│   └── document.pdf
 │
 ├── logs.db
 │
@@ -161,8 +161,8 @@ vestaff-rag-assignment/
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/vestaff-rag-assignment.git
-cd vestaff-rag-assignment
+git clone https://github.com/your-username/rag-document-qa.git
+cd rag-document-qa
 ```
 
 ## 2. Create Virtual Environment
@@ -202,6 +202,12 @@ GROQ_API_KEY=your_groq_api_key_here
 Get a free API key from:
 
 https://console.groq.com
+
+---
+
+## 5. Add Your Document
+
+Place your PDF inside the `data/` folder and update the file path in `app/config.py` if needed.
 
 ---
 
@@ -251,7 +257,7 @@ Open the Streamlit application.
 
 ### Step 2
 
-Click **Ingest Document** to process the AWS Customer Agreement.
+Click **Ingest Document** to process your PDF.
 
 The system will:
 
@@ -262,12 +268,12 @@ The system will:
 
 ### Step 3
 
-Ask questions about the agreement.
+Ask questions about the document.
 
 Example:
 
 ```text
-What are the customer's responsibilities?
+What are the key responsibilities outlined in this document?
 ```
 
 ### Step 4
@@ -308,7 +314,7 @@ Open Analytics to view:
 
 ```json
 {
-  "question": "What are the customer's responsibilities?"
+  "question": "What are the key responsibilities outlined in this document?"
 }
 ```
 
@@ -316,12 +322,12 @@ Open Analytics to view:
 
 ```json
 {
-  "answer": "The customer is responsible for all activities under their account...",
+  "answer": "The document outlines that the user is responsible for...",
   "answer_found": true,
   "sources": [
     {
       "page": 2,
-      "snippet": "You are responsible for Your Content..."
+      "snippet": "Users are responsible for ensuring..."
     }
   ],
   "similarity_score": 0.3254,
