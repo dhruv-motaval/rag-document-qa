@@ -161,7 +161,7 @@ rag-document-qa/
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/rag-document-qa.git
+git clone https://github.com/dhruv-motaval/rag-document-qa.git
 cd rag-document-qa
 ```
 
