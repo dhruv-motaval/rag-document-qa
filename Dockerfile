@@ -16,6 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY app/ ./app/
 COPY streamlit_app.py .
+COPY .streamlit/ ./.streamlit/
 
 # Create directories for runtime storage
 RUN mkdir -p chroma_db
@@ -29,4 +30,6 @@ CMD uvicorn app.main:app --host 0.0.0.0 --port 8000 & \
     streamlit run streamlit_app.py \
     --server.port 7860 \
     --server.address 0.0.0.0 \
-    --server.fileWatcherType none
+    --server.fileWatcherType none \
+    --server.enableXsrfProtection false \
+    --server.enableCORS false
