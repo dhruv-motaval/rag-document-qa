@@ -6,6 +6,12 @@ from fastapi import HTTPException, status
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import ChatPromptTemplate
 
+import os
+
+os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGCHAIN_API_KEY")
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_PROJECT"] = "rag-document-qa"
+
 from app.config import TOP_K, GROQ_API_KEY, SIMILARITY_THRESHOLD
 
 llm = init_chat_model("groq:llama-3.3-70b-versatile", api_key=GROQ_API_KEY)
@@ -97,7 +103,7 @@ def answer_question(question: str):
 
     chain = prompt | llm
 
-    response = chain.invoke({"context": context, "question": question})
+    response = chain.invoke({"context": context, "question": question}, config={"metadata": {"query_type": "definitional"}})
 
     answer = response.content.strip()
 
